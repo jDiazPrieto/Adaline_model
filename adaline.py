@@ -1,7 +1,7 @@
 import random
-from sommelier import matrix_multiply
-from sommelier import dot_product
-from sommelier import transpose
+from math import matrix_multiply
+from math import dot_product
+from math import transpose
 
 
 class Adaline:
@@ -151,3 +151,20 @@ class Adaline:
                 break
             if num_epochs != 0 and epoch >= num_epochs:
                 break
+
+
+def scale_dataframe_inputs(data):
+    """
+    This function takes a pandas dataframe as a parameter and normalizes its input values
+    so that they are between -1 and 1
+
+    :param data: pandas dataframe
+    :return: pandas dataframe:
+    """
+
+    for col in data.columns:
+        if col != 'label' and col != 'quality':
+            values = data[col].values[:]
+            values = (values - values.mean()) / (values.max() - values.min())
+            data[col].values[:] = values
+    return data
